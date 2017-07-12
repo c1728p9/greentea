@@ -234,40 +234,18 @@ def run_host_test(image_path,
 
     # Command executing CLI for host test supervisor (in detect-mode)
     cmd = ["mbedhtrun",
-            '-m', micro,
-            '-p', port,
+           '--native',
             '-f', '"%s"'% image_path,
             ]
 
     if enum_host_tests_path:
-        cmd += ["-e", '"%s"'% enum_host_tests_path]
+        cmd += ["-e", '"%s"' % enum_host_tests_path]
 
     if global_resource_mgr:
         # Use global resource manager to execute test
         # Example:
         # $ mbedhtrun -p :9600 -f "tests-mbed_drivers-generic_tests.bin" -m K64F --grm raas_client:10.2.203.31:8000
         cmd += ['--grm', global_resource_mgr]
-    else:
-        # Use local resources to execute tests
-        # Add extra parameters to host_test
-        if disk:
-            cmd += ["-d", disk]
-        if program_cycle_s:
-            cmd += ["-C", str(program_cycle_s)]
-        if forced_reset_timeout:
-            cmd += ["-R", str(forced_reset_timeout)]
-        if copy_method:
-            cmd += ["-c", copy_method]
-        if target_id:
-            cmd += ["-t", target_id]
-        if reset:
-            cmd += ["-r", reset]
-        if reset_tout:
-            cmd += ["-R", str(reset_tout)]
-        if json_test_cfg:
-            cmd += ["--test-cfg", '"%s"' % str(json_test_cfg)]
-        if run_app:
-            cmd += ["--run"]    # -f stores binary name!
 
     gt_logger.gt_log_tab("calling mbedhtrun: %s"% " ".join(cmd), print_text=verbose)
     gt_logger.gt_log("mbed-host-test-runner: started")

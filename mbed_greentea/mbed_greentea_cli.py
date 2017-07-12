@@ -745,6 +745,8 @@ def main_cli(opts, args, gt_instance_uuid=None):
     ready_mbed_devices = [] # Devices which can be used (are fully detected)
     not_ready_mbed_devices = [] # Devices which can't be used (are not fully detected)
 
+    mbeds_list.append(mbeds.get_dummy_platform('SIM'))
+
     if mbeds_list:
         ready_mbed_devices, not_ready_mbed_devices = filter_ready_devices(mbeds_list)
         if ready_mbed_devices:
